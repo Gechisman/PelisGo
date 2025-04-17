@@ -1,16 +1,13 @@
-import mongoose from 'mongoose'
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+dotenv.config()
 
+const connectiondb = await mysql.createConnection({
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
+  port: process.env.DB_PORT
+});
 
-const conectarDB = async () => {
-    try {
-        const conexionDB = await mongoose.connect('mongodb+srv://Gechisman:Tossaybrieta2@cluster0.uqilu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
-
-        const url = `${conexionDB.connection.host}:${conexionDB.connection.port}`
-        console.log(`MongoDB connected: ${url}`)
-    } catch (error) {
-        console.log(`Error: ${error.message}`)
-        process.exit(1)
-    }
-}
-
-export default conectarDB
+export default connectiondb;

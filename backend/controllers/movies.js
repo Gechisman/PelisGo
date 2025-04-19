@@ -2,13 +2,31 @@ import { Movie, Genre, Actor, Review } from '../models/index.js';
 
 const getAllMovies = async (req, res) => {
     try {
+        // 🎯 Filtros
+        const { year, genre } = req.query;
+
+        const where = {};
+        const include = [
+        { model: Genre, through: { attributes: [] } },
+        { model: Actor, through: { attributes: [] } },
+        { model: Review }
+        ];
+
+        // 🎯 Filtro por año (releaseYear)
+        if (year) {
+        where.releaseYear = year;
+        }
+
+        // 🎯 Filtro por género
+        if (genre) {
+        include[0].where = { name: genre };
+        }
+
         const movies = await Movie.findAll({
-            include: [
-                { model: Genre, through: { attributes: [] } },  // muchos a muchos
-                { model: Actor, through: { attributes: [] } },  // muchos a muchos
-                { model: Review }                               // uno a muchos
-              ]
+        where,
+        include
         });
+
         //Para importar la url de la imagen
         const moviesWithPosterUrl = movies.map(movie => {
             const data = movie.toJSON(); // Convertimos el objeto Sequelize a un JSON plano

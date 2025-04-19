@@ -78,34 +78,6 @@ const addMovie = async (req, res) => {
     }
 }
 
-const updateMovie = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { title, releaseYear, director, duration, poster, description } = req.body;
-        
-        // 1. Buscar la película
-        const movie = await Movie.findByPk(id);
-        if (!movie) {
-            return res.status(404).json({ error: 'Movie not found' });
-        }
-
-        // 2. Actualizar la película
-        await movie.update({
-            title,
-            releaseYear,
-            director,
-            duration,
-            poster,
-            description
-        });
-
-        res.json(movie);
-    } catch (error) {
-        console.error('Failed to update movie:', error);
-        res.status(500).json({ error: 'Failed to update movie' });
-    }
-}
-
 const deleteMovie = async (req, res) => {
     try {
         const { id } = req.params;
@@ -130,6 +102,45 @@ const deleteMovie = async (req, res) => {
     } catch (error) {
         console.error('Failed to delete movie:', error);
         res.status(500).json({ error: 'Failed to delete movie' });
+    }
+}
+
+const updateMovie = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, releaseYear, director, duration, poster, description, genreIds, actorIds, } = req.body;
+        
+        // 1. Buscar la película
+        const movie = await Movie.findByPk(id);
+        if (!movie) {
+            return res.status(404).json({ error: 'Movie not found' });
+        }
+
+        // Solo actualiza los campos que vengan definidos en el body
+        const updatedFields = {};
+        if (title !== undefined) updatedFields.title = title;
+        if (releaseYear !== undefined) updatedFields.releaseYear = releaseYear;
+        if (director !== undefined) updatedFields.director = director;
+        if (duration !== undefined) updatedFields.duration = duration;
+        if (poster !== undefined) updatedFields.poster = poster;
+        if (description !== undefined) updatedFields.description = description;
+
+        // 2. Actualizar la película
+        await movie.update(updatedFields);
+
+         // 3. Actualizar relaciones (si se proporcionan)
+        if (genreIds) {
+            await movie.setGenres(genreIds); // Reemplaza los géneros actuales
+        }
+    
+        if (actorIds) {
+            await movie.setActors(actorIds); // Reemplaza los actores actuales
+        }
+  
+        res.json({ message: 'Película actualizada correctamente', movie });
+    } catch (error) {
+        console.error('Failed to update movie:', error);
+        res.status(500).json({ error: 'Failed to update movie' });
     }
 }
 

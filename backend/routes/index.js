@@ -1,10 +1,13 @@
-// import express from 'express';
+import { Router } from 'express';
+import publicRoutes from './public.js';
+import adminRoutes from './admin.js';
 
-// import movies from './movies.js';
-// import { getAllMovies } from "../controllers/movies.js";
+const router = Router();
 
-// const router = express.Router();
+// Rutas públicas: /movies, /movie/:id
+router.use('/', publicRoutes);
 
-// router.use('/', getAllMovies);
+// Rutas admin: /admin/movies
+router.use('/admin', adminRoutes);
 
-// export default router;
+export default router;

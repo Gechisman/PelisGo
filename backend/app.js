@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import router from './routes/movies.js'
+import routes from './routes/index.js';
 import cors from 'cors';
 
 dotenv.config() //.env file
@@ -18,7 +18,7 @@ app.use('/public', express.static('public'));
 
 
 //Agrega todas las rutas que vamos definiendo en la carpeta rutas. .use abarca todas estas(put, delete, get, set...)
-app.use('/', router)
+app.use('/', routes)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

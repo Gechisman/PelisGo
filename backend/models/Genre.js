@@ -1,9 +1,9 @@
-import Sequelize from 'sequelize'
+import { DataTypes } from 'sequelize'
 import db from '../config/db.js'
 
 const Genre = db.define('Genre', {
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true
     }

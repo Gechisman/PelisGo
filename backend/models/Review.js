@@ -1,19 +1,19 @@
-import Sequelize from 'sequelize'
+import {DataTypes} from 'sequelize'
 import db from '../config/db.js'
 
 const Review = db.define('Review', {
     reviewer_name: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
     },
     rating: {
-        type: Sequelize.DECIMAL(3, 1),
+        type: DataTypes.DECIMAL(3, 1),
         validate: {
             min: 1.0,
             max: 10.0
         }
     },
     comment: {
-        type: Sequelize.TEXT
+        type: DataTypes.TEXT
     }
 }, {
     tableName: 'reviews',

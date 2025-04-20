@@ -1,16 +1,16 @@
-import Sequelize from 'sequelize'
+import { DataTypes } from 'sequelize';
 import db from '../config/db.js'
 
 const Actor = db.define('Actor', {
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     birth_year: {
-      type: Sequelize.INTEGER
+      type: DataTypes.INTEGER
     },
     nationality: {
-      type: Sequelize.STRING
+      type: DataTypes.STRING
     }
   }, {
     tableName: 'actors',

@@ -1,31 +1,31 @@
-import Sequelize from 'sequelize'
+import { DataTypes } from 'sequelize'
 import db from '../config/db.js'
 
 //El nombre entre comillas es el que uso para usar p.e. Movie.findAll()
 const Movie = db.define('Movie', {
     title: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     releaseYear: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         field: 'release_year'
     },
     director: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     duration: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     poster: {
-        type: Sequelize.TEXT,
+        type: DataTypes.TEXT,
         allowNull: true,
     },
     description: {
-        type: Sequelize.TEXT,
+        type: DataTypes.TEXT,
         allowNull: true,
     },    
 }, {

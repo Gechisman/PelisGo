@@ -4,6 +4,7 @@ import Movie from './Movie.js';
 import Genre from './Genre.js';
 import Actor from './Actor.js';
 import Review from './Review.js';
+import User from './User.js';
 
 // Many-to-Many: Movies <-> Genres
 Movie.belongsToMany(Genre, { through: 'movie_genres', foreignKey: 'movie_id' });
@@ -22,5 +23,6 @@ export {
     Movie,
     Genre,
     Actor,
-    Review
+    Review,
+    User
   };

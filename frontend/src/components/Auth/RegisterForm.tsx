@@ -61,9 +61,9 @@ const RegisterForm = () => {
         <div className="bg-black/80 p-10 md:p-20 rounded-md">
           <h1 className="text-white text-4xl md:text-5xl font-bold mb-10">Sign Up</h1>
            
-          {msg && (
+          {error && (
             <div className="bg-red-500/20 border border-red-500 text-red-500 p-4 mb-6 rounded">
-              {msg}
+              {error}
             </div>
           )}
           

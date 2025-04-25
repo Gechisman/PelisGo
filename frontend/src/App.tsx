@@ -2,8 +2,8 @@ import {BrowserRouter, Routes, Route } from 'react-router-dom'
 import AuthLayout from './layout/AuthLayout'
 import ForgotPassword from './pages/ForgotPassword'
 import ConfirmAccount from './pages/ConfirmAccount'
-import LoginForm from './components/LoginForm'
-import RegisterForm from './components/RegisterForm'
+import LoginForm from './components/Auth/LoginForm'
+import RegisterForm from './components/Auth/RegisterForm'
 
 function App() {
 

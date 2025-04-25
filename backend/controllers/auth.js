@@ -1,6 +1,7 @@
 import { User } from '../models/index.js';
 import bcrypt from 'bcryptjs';
-import generarJWT from '../helpers/generarJWT.js';
+import generateJWT from '../helpers/generateJWT.js';
+import generateId from '../helpers/generateId.js';
 
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
@@ -21,6 +22,25 @@ const registerUser = async (req, res) => {
         console.error('Error registering user:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
+}
+
+const confirmUser = async (req, res) => {
+  const {token} = req.params;
+  const userConfirm = await User.findOne({ where: { token } });
+    if (!userConfirm) {
+      return res.status(404).json({ msg: 'Token not valid' });
+    }
+  
+  try{        
+    userConfirm.token = null;
+    userConfirm.confirmado = true;
+    await userConfirm.save();
+    res.json({ msg: 'User confirmed successfully' });
+
+  } catch (error) {
+    console.error('Error confirming user:', error);
+    return res.status(500).json({ msg: 'Server error' });
+  }
 }
 
 const authenticate = async (req, res) => {
@@ -52,4 +72,4 @@ const authenticate = async (req, res) => {
       }
 }
 
-export { registerUser, authenticate };
+export { registerUser, authenticate, confirmUser };

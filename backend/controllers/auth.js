@@ -53,18 +53,20 @@ const authenticate = async (req, res) => {
         if (!user) {
           return res.status(404).json({ msg: 'User not found' });
         }
-    
-        // Verificar si está confirmado
-        if (!user.confirmado) {
-          return res.status(401).json({ msg: 'Account not confirmed' });
-        }        
+            
     
         // Verificar contraseña
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
           return res.status(401).json({ msg: 'Incorrect password' });
         } else {
-            res.json({token: generarJWT(usuario.id)});
+            
+          // Verificar si está confirmado
+          if (!user.confirmado) {
+            return res.status(401).json({ msg: 'Account not confirmed' });
+          } else {
+            return res.json({token: generateJWT(user.id)});
+          }
         }
     } catch (error) {
         console.error('Login error:', error);

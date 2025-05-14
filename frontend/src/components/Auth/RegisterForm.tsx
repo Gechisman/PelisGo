@@ -35,7 +35,8 @@ const RegisterForm = () => {
     try {
         setError('')
         setIsLoading(true);
-        const answer = await axios.post('http://localhost:3000/auth/login', {email, password})
+        const {data} = await axios.post('http://localhost:3000/auth/register', {email, name, password})
+        localStorage.setItem('token', data.token)
     } catch (error) {
         setError('Failed to sign up, please check your credentials')
         console.log(error);

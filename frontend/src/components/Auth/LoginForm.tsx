@@ -21,7 +21,9 @@ const LoginForm = () => {
     
     try {
         setIsLoading(true);        
-        const answer = await axios.post('http://localhost:3000/auth/authenticate', {email, password})
+        const {data} = await axios.post('http://localhost:3000/auth/authenticate', {email, password})
+
+        console.log(data);
     } catch (error) {
         setError('Failed to sign in, please check your credentials')
         console.log(error);
